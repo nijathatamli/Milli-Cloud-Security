@@ -1,0 +1,13 @@
+# Local-only override: build the UI from this repo's ./ui source instead of
+# pulling prowlercloud/prowler-ui:stable. Picked up automatically by
+# `docker compose up -d` alongside docker-compose.yml.
+services:
+  ui:
+    image: milli-cloud-security-ui:local
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+      target: prod
+      args:
+        # NEXT_PUBLIC_* vars are baked in at build time by Next.js
+        - NEXT_PUBLIC_API_BASE_URL=http://localhost:8080/api/v1
